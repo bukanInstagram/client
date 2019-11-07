@@ -63,11 +63,15 @@ export default {
         }
       })
         .then(({ data }) => {
+          swal.fire("Success", "Register Success!");
           this.loginSite = !this.loginSite;
           this.email = "";
           this.username = "";
         })
-        .catch(err => console.log(err))
+        .catch(({ response }) => {
+          swal.fire("Error", response.data.message.join(". "));
+          console.log(response.data.message);
+        })
         .finally(() => {
           this.password = "";
         });
@@ -82,12 +86,14 @@ export default {
         }
       })
         .then(({ data }) => {
-          localStorage.setItem("jwtToken", data.jwtToken);
+          // localStorage.setItem("jwtToken", data.jwtToken);
           swal.fire("Success", "Login Success!");
           this.$emit("logged-in");
           this.email = "";
         })
-        .catch(err => console.log(err))
+        .catch(({ response }) => {
+          swal.fire("Error", response.data.message);
+        })
         .finally(() => {
           this.password = "";
         });
