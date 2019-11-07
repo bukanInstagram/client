@@ -83,6 +83,7 @@ export default {
       })
         .then(({ data }) => {
           localStorage.setItem("jwtToken", data.jwtToken);
+          swal.fire("Success", "Login Success!");
           this.$emit("logged-in");
           this.email = "";
         })
