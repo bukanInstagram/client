@@ -1,22 +1,35 @@
 
 <template>
   <div>
-    <Main></Main>
+    <LoginPage v-if="!isLogin" @logged-in="logging"></LoginPage>
+    <div v-else>
+      <!-- <NavBar></NavBar> -->
+      <span>LOGIN SUCCESS!</span>
+      <!-- <MainPage v-if="isLogin"></MainPage> -->
+    </div>
   </div>
 </template>
 
 <script>
-import Main from "./components/Main";
+import LoginPage from "./views/LoginPage";
+// import NavBar from "./components/NavBar";
+// import MainPage from "./views/MainPage";
+
 export default {
   components: {
-    Main
+    LoginPage
+    // NavBar
+    // MainPage
   },
   data() {
     return {
-      username: "",
-      email: "",
-      password: ""
+      isLogin: false
     };
+  },
+  methods: {
+    logging() {
+      this.isLogin = true;
+    }
   }
 };
 </script>
