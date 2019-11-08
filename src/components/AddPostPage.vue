@@ -1,48 +1,60 @@
 <template>
   <div>
-    <div class="column">
+   <div class="addpost">
+        <br>
+        <br>
+        <div>
+            <h1> Let's Influence the World!</h1>
+        </div>
+        <br>
+        <div class="containAdd">
+            <div class="addphoto">
+                <img :src="imageLink" alt="" width="400">
+            </div>
+            <div class="formadd">
+                <div class="ui small form">
+                    <div class="fields">
+                        <div class="field">
+                            <label for="postTitle"><strong>Title</strong></label>
+                            <input v-model="title" type="text" class="form-control" id="postTitle"
+                                placeholder="post a title">
+                        </div>
+                        <div class="field">
+                            <label for="postDescription"><strong>Description</strong></label>
+                            <input v-model="description" type="text" class="form-control" id="postDescription"
+                                placeholder="description">
+                        </div>
+                    </div>
+                    <div class=" sixteen wide field">
+                        <label for="articleTag"><strong>Tag</strong></label>
+                        <select v-model="tag" class="ui search dropdown" id="articleTag">
+                            <option value="" selected disabled hidden>choose tag here</option>
+                            <option>sport</option>
+                            <option>daily</option>
+                            <option>politic</option>
+                            <option>health</option>
+                            <option>travel</option>
+                            <option>automotive</option>
+                            <option>electronic</option>
+                            <option>hobbies</option>
+                            <option>food</option>
+                        </select>
+                        </label>
+                    </div>
+                    <div class=" sixteen wide field">
+                        <label for="addImage"><strong>Add Image</strong></label>
+                        <input @change="previewFile" type="file" class="form-control-file ui secondary button"
+                            id="addImage">
+                        <br>
+                        <br>
+                        <button @click.prevent="uploadImage" class="ui small button">Upload Image</button>
+                    </div>
 
-        <div class="logo">
-            <img :src="imageLink" alt="" width="400">
+                    <button class="ui secondary button" type="submit">Submit</button>
+                </div>
+            </div>
         </div>
     </div>
-        <!-- <div class="column"> -->
-    <div class="welcome">
-        <div class="p-3 rounded w-75" style="background-color: rgb(226, 226, 226);" >
-            <form @submit.prevent="submitPost">
-                <div class="form-group">
-                  <label for="postTitle"><strong>Title</strong></label>
-                  <input v-model="title" type="text" class="form-control" id="postTitle" placeholder="post a title">
-                  <label for="postDescription"><strong>Description</strong></label>
-                  <input v-model="description" type="text" class="form-control" id="postDescription" placeholder="description">
-                </div>
-                <div class="form-group">
-                  <label for="articleTag"><strong>Tag</strong></label>
-                  <select v-model="tag" class="form-control" id="articleTag">
-                    <option value="" selected disabled hidden>Choose Tag Here</option>
-                    <option>Sports</option>
-                    <option>Daily-Lifes</option>
-                    <option>Politics</option>
-                    <option>Healths</option>
-                    <option>Travels</option>
-                    <option>Automotives</option>
-                    <option>Electronics</option>
-                    <option>Hobbies</option>
-                    <option>Foods</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="addImage"><strong>Add Image</strong></label>
-                  <input @change="previewFile" type="file" class="form-control-file" id="addImage">
-                  <button @click.prevent="uploadImage" class="btn btn-info my-2">Upload Image</button>
-                </div>
-
-                <button class="btn btn-primary" type="submit">Post</button>
-            </form>
-        </div>
-    </div>
-        <!-- </div> -->
-    
   </div>
 </template>
 
