@@ -36,7 +36,7 @@ import axios from "axios";
 import swal from "sweetalert2";
 
 const axiosReq = axios.create({
-  baseURL: "http://localhost:3000"
+  baseURL: "http://34.87.109.94"
 });
 
 export default {
@@ -87,6 +87,7 @@ export default {
       })
         .then(({ data }) => {
           localStorage.setItem("access_token", data.access_token);
+          localStorage.setItem("user", data.user);
           swal.fire("Success", "Login Success!");
           this.$emit("logged-in");
           this.email = "";

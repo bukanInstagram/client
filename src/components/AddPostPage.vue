@@ -50,7 +50,7 @@
                         <button @click.prevent="uploadImage" class="ui small button">Upload Image</button>
                     </div>
 
-                    <button class="ui secondary button" type="submit">Submit</button>
+                    <button class="ui secondary button" type="submit" @click="submitPost">Submit</button>
                 </div>
             </div>
         </div>
@@ -81,7 +81,7 @@ export default {
     submitPost() {
       axios({
         method: "post",
-        url: "http://localhost:3000/posts",
+        url: "http://34.87.109.94/posts",
         data: {
           title: this.title,
           tags: this.tag,
@@ -100,7 +100,8 @@ export default {
           this.title = "";
           this.tag = "";
           this.description = "";
-          this.$emit("reFetch");
+          this.$emit("refetch");
+          this.$emit('backHome')
         })
         .catch(err => {
           Swal.fire({
@@ -127,7 +128,7 @@ export default {
       bodyFormData.append("image", img);
       axios({
         method: "post",
-        url: "http://localhost:3000/upload",
+        url: "http://34.87.109.94/upload",
         data: bodyFormData
       })
         .then(({ data }) => {
