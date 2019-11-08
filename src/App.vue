@@ -2,14 +2,21 @@
   <div>
     <LoginPage v-show="!isLogin" @logged-in="login"></LoginPage>
     <div v-show="isLogin">
-      <Navbar></Navbar>
-      <Main :posts="posts" v-show="content==='main'"></Main>
-      <AddPostPage v-show="content==='addPost'"></AddPostPage>
+      <Navbar :isLogin="isLogin" @logout="logout" @back-home="backHome"></Navbar>
+      <Main
+        :posts="posts"
+        v-show="content==='main'"
+        @check-status="addPost"
+        @selectedPost="selectedPost"
+      ></Main>
+      <AddPostPage v-show="content==='addPost'" @refetch="fetchData" @backHome="backHome"></AddPostPage>
       <PostPage
         v-show="content==='postPage'"
         @refetch="fetchData"
         @likeComment="likePost"
         @deletePost="deletePost"
+        :selectedPosts="selectedPosts"
+        :posts="posts"
       ></PostPage>
     </div>
   </div>
@@ -35,14 +42,15 @@ export default {
     return {
       isLogin: false,
       content: "main",
-      posts: ""
+      posts: "",
+      selectedPosts: ""
     };
   },
   methods: {
     fetchData() {
       axios({
         method: "get",
-        url: "http://localhost:3000/posts"
+        url: "http://34.87.109.94/posts"
       })
         .then(({ data }) => {
           this.posts = data;
@@ -55,7 +63,7 @@ export default {
     likePost(id) {
       axios({
         method: "patch",
-        url: `http://localhost:3000/posts/${id}`,
+        url: `http://34.87.109.94/posts/${id}`,
         data: {},
         headers: {
           access_token: localStorage.getItem("access_token")
@@ -88,7 +96,7 @@ export default {
         if (result.value) {
           axios({
             method: "delete",
-            url: `http://localhost:3000/posts/${id}`,
+            url: `http://34.87.109.94/posts/${id}`,
             data: {},
             headers: {
               access_token: localStorage.getItem("access_token")
@@ -106,6 +114,25 @@ export default {
     },
     login() {
       this.isLogin = true;
+    },
+    addPost(val) {
+      if (val === "ok") {
+        this.content = "addPost";
+      } else {
+        this.content = "login";
+      }
+    },
+    logout() {
+      localStorage.clear();
+      this.isLogin = false;
+    },
+    selectedPost(data) {
+      console.log("masuk");
+      this.selectedPosts = data;
+      this.content = "postPage";
+    },
+    backHome() {
+      this.content = "main";
     }
   },
   created() {
