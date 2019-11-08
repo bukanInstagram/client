@@ -59,93 +59,92 @@
 </template>
 
 <script>
-import axios from'axios'
-import Swal from 'sweetalert2'
+import axios from "axios";
+import Swal from "sweetalert2";
 export default {
-    data() {
-      return {
-        title : '',
-        tag : '',
-        description: '',
-        formUploadImg: {
-        img: ''
-        },
-        imageLink : 'https://i2.wp.com/www.scribblesandcrumbs.com/wp-content/plugins/penci-portfolio//images/no-thumbnail.jpg?w=1170'
-      }
+  data() {
+    return {
+      title: "",
+      tag: "",
+      description: "",
+      formUploadImg: {
+        img: ""
+      },
+      imageLink:
+        "https://i2.wp.com/www.scribblesandcrumbs.com/wp-content/plugins/penci-portfolio//images/no-thumbnail.jpg?w=1170"
+    };
+  },
+  methods: {
+    previewFile(event) {
+      this.formUploadImg.img = event.target.files[0];
     },
-    methods :{
-      previewFile (event) {
-        this.formUploadImg.img = event.target.files[0]
-      },
-      submitPost(){
-        axios({
-            method : 'post',
-            url :'http://localhost:3000/posts',
-            data : {
-                title : this.title,
-                tags : this.tag,
-                description : this.description,
-                img : this.imageLink
-            },
-            headers : {
-                access_token : localStorage.getItem('access_token')
-            }
-        })
-        .then(({data})=>{
-          Swal.fire({
-            icon: 'success',
-            title: 'Post Created'
-          })
-          this.title = ''
-          this.tag = ''
-          this.description = ''
-          this.$emit('reFetch')
-        })
-        .catch(err=>{
-          Swal.fire({
-            icon: 'error',
-            title: err.response.data.message.join('\n')
-          })
-        })
-      },
-      uploadImage(){
-        let { img } = this.formUploadImg
-        let bodyFormData = new FormData()
-        if(this.formUploadImg.img !== ''){
-          Swal.fire({
-            title: 'wait a minute to upload data',
-            allowOutsideClick: () => !Swal.isLoading()
-          })
-          Swal.showLoading('wait a minute ')
-        }else{
-          Swal.fire({
-            icon: 'error',
-            title: 'No Image Selected'
-          })
+    submitPost() {
+      axios({
+        method: "post",
+        url: "http://localhost:3000/posts",
+        data: {
+          title: this.title,
+          tags: this.tag,
+          description: this.description,
+          img: this.imageLink
+        },
+        headers: {
+          access_token: localStorage.getItem("access_token")
         }
-        bodyFormData.append('image', img)
-        axios({
-            method : 'post',
-            url :'http://localhost:3000/upload',
-            data :bodyFormData
-        })
-        .then(({data})=>{
-          this.imageLink = data.link
-          Swal.close()
+      })
+        .then(({ data }) => {
           Swal.fire({
-            icon: 'success',
-            title: 'Image Uploaded'
-          })
+            icon: "success",
+            title: "Post Created"
+          });
+          this.title = "";
+          this.tag = "";
+          this.description = "";
+          this.$emit("reFetch");
         })
-        .catch(err=>{
-          console.log(err.response.data.message)
-        })
+        .catch(err => {
+          Swal.fire({
+            icon: "error",
+            title: err.response.data.message.join("\n")
+          });
+        });
+    },
+    uploadImage() {
+      let { img } = this.formUploadImg;
+      let bodyFormData = new FormData();
+      if (this.formUploadImg.img !== "") {
+        Swal.fire({
+          title: "wait a minute to upload data",
+          allowOutsideClick: () => !Swal.isLoading()
+        });
+        Swal.showLoading("wait a minute ");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "No Image Selected"
+        });
       }
+      bodyFormData.append("image", img);
+      axios({
+        method: "post",
+        url: "http://localhost:3000/upload",
+        data: bodyFormData
+      })
+        .then(({ data }) => {
+          this.imageLink = data.link;
+          Swal.close();
+          Swal.fire({
+            icon: "success",
+            title: "Image Uploaded"
+          });
+        })
+        .catch(err => {
+          console.log(err.response.data.message);
+        });
     }
   }
-
+};
 </script>
 
 <style>
-
 </style>
