@@ -86,7 +86,7 @@ export default {
         }
       })
         .then(({ data }) => {
-          // localStorage.setItem("jwtToken", data.jwtToken);
+          localStorage.setItem("access_token", data.access_token);
           swal.fire("Success", "Login Success!");
           this.$emit("logged-in");
           this.email = "";
@@ -100,7 +100,7 @@ export default {
     }
   },
   created() {
-    if (localStorage.getItem("jwtToken")) this.$emit("logged-in");
+    if (localStorage.getItem("access_token")) this.$emit("logged-in");
   }
 };
 </script>
